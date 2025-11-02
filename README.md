@@ -166,33 +166,4 @@ chain = LLMChain(llm=llm, prompt=prompt)
 result = chain.run({"context": context, "paragraph": paragraph})
 print(result)
 
-from graphviz import Digraph
-
-# Create a directed graph
-dot = Digraph(comment='Text Summarization & Scoring Pipeline', format='png')
-
-# Define nodes
-dot.node('A', 'Raw Dialogue')
-dot.node('B', 'Text Preprocessing\n(cleaning, lowercasing,\nstopwords removal)')
-dot.node('C1', 'TF-IDF Vectorizer')
-dot.node('C2', 'WordCloud & EDA')
-dot.node('D', 'Cosine Similarity\n(proxy summary score)')
-dot.node('E', 'XGBoost Model\n(regression on summary scores)')
-dot.node('F', 'BART Summarizer\n(Seq2Seq Model)')
-dot.node('G', 'LangChain One-Shot Prompt\n(context-aware bullet-point summaries)')
-dot.node('H', 'ROUGE Metrics\nEvaluation')
-dot.node('I', 'Future: RAG +\nVector Database Integration')
-
-# Connect nodes with arrows
-dot.edges(['AB', 'BC1', 'BC2'])
-dot.edge('C1', 'D')
-dot.edge('D', 'E')
-dot.edge('E', 'F')
-dot.edge('F', 'G')
-dot.edge('G', 'H')
-dot.edge('H', 'I')
-
-# Render the graph to a file (PNG)
-dot.render('text_summarization_pipeline', view=True)
-
 
